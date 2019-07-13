@@ -124,6 +124,7 @@ export default class Calendar extends React.Component {
     previousYearButtonLabel: PropTypes.string,
     nextYearButtonLabel: PropTypes.string,
     renderCustomHeader: PropTypes.func,
+    renderCustomYearHeader: PropTypes.func,
     renderDayContents: PropTypes.func,
     onDayMouseEnter: PropTypes.func,
     onMonthMouseLeave: PropTypes.func
@@ -606,6 +607,7 @@ export default class Calendar extends React.Component {
       var monthsToAdd = i - this.props.monthSelectedIn;
       var monthDate = addMonths(this.state.date, monthsToAdd);
       var monthKey = `month-${i}`;
+      var customYearHear = this.props.renderCustomYearHeader;
       monthList.push(
         <div
           key={monthKey}
@@ -618,7 +620,7 @@ export default class Calendar extends React.Component {
             ? this.props.renderCustomHeader
               ? this.renderCustomHeader({ monthDate, i })
               : this.renderDefaultHeader({ monthDate, i })
-            : this.renderYearHeader({ monthDate, i })}
+            : customYearHear ? customYearHear({ monthDate, i }) : this.renderYearHeader({ monthDate, i })}
           <Month
             onChange={this.changeMonthYear}
             day={monthDate}
